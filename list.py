@@ -13,5 +13,6 @@ passwords = {"123456", "123456789", "12345678", "passw0rd", "passw0rt", "passwor
              "andrea", "pepper", "nicole", "killer", "abcdef", "hannah", "test", "alexander", "andrew", "222222",
              "joshua", "freedom", "samsung", "asdfghj", "purple", "ginger", "123654", "matrix", "secret",
              "summer", "1q2w3e", "snoopy1"}
+
 # String with every character that can appear in a password
 characters = "abcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ!§$%&/\\()|=?'<>,.;:-_#+*@€{[]}"
