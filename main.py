@@ -1,9 +1,13 @@
-import list
 import random
 import tkinter as tk
+import tkinter.ttk as ttk
+
+import STATICS
 
 
 def check_password():
+    text = ""
+
     letter_upper = 0
     letter_lower = 0
     letter_digit = 0
@@ -11,23 +15,24 @@ def check_password():
 
     fail_count = 0
 
-    password = text_password.get('1.0', tk.END)
-    print('User überprüft: ', password)
+    password = entry_password.get()
+    print('\nUser überprüft:' + password)
 
     if password.lower() == "penis":
         print("ACHTUNG! Ihr Passwort ist zu kurts!")
-        labelpasswordfeedback = tk.Label(master=frame_password_feedback, text="ACHTUNG! Ihr Passwort ist zu kurts!")
-        labelpasswordfeedback.pack()
-    elif not (" " in password) and password.isprintable():
-        print("")
-        labelpasswordfeedback = tk.Label(master=frame_password_feedback, text="")
-        labelpasswordfeedback.pack()
+        label_password_status.config(text="Ihr Passwort ist zu kurts!\n", fg="red")
+        return None
+    elif password == "":
+        print("Bitte geben Sie ein Password ein!")
+        label_password_status.config(text="Bitte geben Sie ein Password ein!\n", fg="red")
+        return None
+    elif not (" " in password) or password.isprintable():
+        print("Password wird überprüft\n")
     else:
         print("Bitte verwenden sie keine leerzeichen und nur zeichen die 'regulär' verwendbar sind")
-        labelpasswordfeedback = tk.Label(master=frame_password_feedback, text="Bitte verwenden sie keine "
-                                                                              "leerzeichen und nur zeichen die "
-                                                                              "'regulär' verwendbar sind")
-        labelpasswordfeedback.pack()
+        label_password_status.config(
+            text="Bitte verwenden sie keine leerzeichen und nur zeichen die 'regulär' verwendbar sind\n", fg="red")
+        return None
 
     for letter in password:
         if letter.isdigit():
@@ -42,152 +47,173 @@ def check_password():
     password_len = len(password)
 
     print("Tipps für ihr Passwort:")
-    labelpasswordfeedback = tk.Label(master=frame_password_feedback, text="Tipps für ihr Passwort:")
-    labelpasswordfeedback.pack()
+    text += "\nTipps für ihr Passwort:\n"
 
-    for i in list.passwords:
+    for i in STATICS.passwords:
         if i in password or i == password:
             fail_count += 1
             print("Verwenden sie ein eigenes Password")
-            labelpasswordfeedback = tk.Label(master=frame_password_feedback,
-                                             text="Verwenden sie ein eigenes Password")
-            labelpasswordfeedback.pack()
+            text += "Verwenden sie ein eigenes Password\n"
             break
     if letter_lower < 2:
         fail_count += 1
         print("Verwenden sie (mehr) kleine Buchstaben")
-        labelpasswordfeedback = tk.Label(master=frame_password_feedback,
-                                         text="Verwenden sie (mehr) kleine Buchstaben")
-        labelpasswordfeedback.pack()
+        text += "Verwenden sie (mehr) kleine Buchstaben\n"
     if letter_upper < 3:
         fail_count += 1
         print("Verwenden sie (mehr) Große Buchstaben")
-        labelpasswordfeedback = tk.Label(master=frame_password_feedback, text="Verwenden sie (mehr) Große Buchstaben")
-        labelpasswordfeedback.pack()
+        text += "Verwenden sie (mehr) Große Buchstaben\n"
     if letter_digit < 4:
         fail_count += 1
         print("Verwenden sie (mehr) Zahlen")
-        labelpasswordfeedback = tk.Label(master=frame_password_feedback, text="Verwenden sie (mehr) Zahlen")
-        labelpasswordfeedback.pack()
+        text += "Verwenden sie (mehr) Zahlen\n"
     if letter_special < 3:
         fail_count += 1
         print("Verwenden sie (mehr) Sonderzeichen")
-        labelpasswordfeedback = tk.Label(master=frame_password_feedback, text="Verwenden sie (mehr) Sonderzeichen")
-        labelpasswordfeedback.pack()
-
+        text += "Verwenden sie (mehr) Sonderzeichen\n"
     if password.istitle():
         fail_count += 1
         print("Verwenden sie Keine Wortähnlichen buchstaben ketten")
-        labelpasswordfeedback = tk.Label(master=frame_password_feedback,
-                                         text="Verwenden sie Keine Wortähnlichen buchstaben ketten")
-        labelpasswordfeedback.pack()
+        text += "Verwenden sie Keine Wortähnlichen buchstaben ketten\n"
     if password.isalnum():
         fail_count += 1
         print("Verwenden sie keine reinfolge wie 'abc' oder '123'")
-        labelpasswordfeedback = tk.Label(master=frame_password_feedback,
-                                         text="Verwenden sie keine reinfolge wie 'abc' oder '123'")
-        labelpasswordfeedback.pack()
+        text += "Verwenden sie keine reinfolge wie 'abc' oder '123'\n"
 
     if password_len < 10:
         fail_count += 1
         print("Verwenden sie ein längeresw Passwort")
-        labelpasswordfeedback = tk.Label(master=frame_password_feedback, text="Verwenden sie ein längeresw Passwort")
-        labelpasswordfeedback.pack()
+        text += "Verwenden sie ein längeresw Passwort\n"
 
     if fail_count == 0:
         print("Ihr Password erfüllt die Kirterien")
-        labelpasswordfeedback = tk.Label(master=frame_password_feedback, text="Ihr Password erfüllt die Kirterien")
-        labelpasswordfeedback.pack()
+        text += "Ihr Password erfüllt die Kirterien\n"
+
+    label_password_tipps.config(text=text)
+    text, fg = "", ""
 
     print("")
-    labelpasswordfeedback = tk.Label(master=frame_password_feedback, text='')
-    labelpasswordfeedback.pack()
     print('-' * 45)
-    labelpasswordfeedback = tk.Label(master=frame_password_feedback, text='-' * 45)
-    labelpasswordfeedback.pack()
-    print("Sie haben " + str(fail_count) + " mängel im Password")
-    labelpasswordfeedback = tk.Label(master=frame_password_feedback,
-                                     text="Sie haben " + str(fail_count) + " mängel im Password")
-    labelpasswordfeedback.pack()
+    text += ("-" * 45) + "\n"
 
     if fail_count >= 5:
         print("ACHTUNG! Ihr Passwort ist SEHR Schlecht")
-        labelpasswordfeedback = tk.Label(master=frame_password_feedback,
-                                         text="ACHTUNG! Ihr Passwort ist SEHR Schlecht")
-        labelpasswordfeedback.pack()
+        text += "ACHTUNG! Ihr Passwort ist SEHR Schlecht\n"
+        fg = 'red'
     elif fail_count >= 3:
         print("Achtung! Ihr Passwort ist Schwach")
-        labelpasswordfeedback = tk.Label(master=frame_password_feedback, text="Achtung! Ihr Passwort ist Schwach")
-        labelpasswordfeedback.pack()
+        text += "Achtung! Ihr Passwort ist Schwach\n"
+        fg = 'orange'
     elif fail_count >= 1:
         print("Ihr Passwort ist Sicher")
-        labelpasswordfeedback = tk.Label(master=frame_password_feedback, text="Ihr Passwort ist Sicher")
-        labelpasswordfeedback.pack()
+        text += "Ihr Passwort ist Sicher\n"
+        fg = 'green'
     elif fail_count == 0:
         print("Ihr Passwort ist SEHR Sicher")
-        labelpasswordfeedback = tk.Label(master=frame_password_feedback, text="Ihr Passwort ist SEHR Sicher")
-        labelpasswordfeedback.pack()
+        text += "Ihr Passwort ist SEHR Sicher\n"
+        fg = 'green'
 
     print('-' * 45)
-    labelpasswordfeedback = tk.Label(master=frame_password_feedback, text='-' * 45)
-    labelpasswordfeedback.pack()
+    text += ("-" * 45) + "\n\n\n"
+
+    label_password_status.config(text=text, fg=fg)
 
 
 def generate_password():
     gen_password = ""
-    for i in range(30):
-        gen_password += list.characters[random.randrange(len(list.characters))]
-    labelgenpassword = tk.Label(master=frame_label_gen_password, text=gen_password)
-    labelgenpassword.pack()
-    print(gen_password)
+    for i in range(int(user_len_password.get())):
+        gen_password += STATICS.characters[random.randrange(len(STATICS.characters))]
+    label_gen_password.config(text=gen_password, fg="green")
+    print("\nUser genneriert:\n" + str(gen_password))
+
+
+def show():
+    entry_password.configure(show='')
+    check_hide_password.configure(command=hide, text='Verberge Passwort')
+
+
+def hide():
+    entry_password.configure(show='*')
+    check_hide_password.configure(command=show, text='Zeige Passwort')
 
 
 if __name__ == '__main__':
     window = tk.Tk()
 
-    frame_top = tk.Frame()
-    top_title = tk.Label(master=frame_top, text="Tiffinante's Password-Überprüfer!")
-    top_title.pack()
+    # window settings
+    window.iconbitmap("images/password-24px.ico")
+    window.title(STATICS.window_title)
+    window.geometry('400x550')
+    window.minsize(width=400, height=550)
+    window.resizable(width=False, height=False)
 
+    # build widgets
+    # Description for the Entry
     frame_label_check = tk.Frame()
-    label_password_input = tk.Label(master=frame_label_check, text='Bitte geben sie ihr Passwort ein:')
+    label_password_input = tk.Label(master=frame_label_check, text='Bitte geben sie ein Passwort ein:')
     label_password_input.pack()
 
+    # Text input
     frame_password = tk.Frame()
-    text_password = tk.Text(master=frame_password, width=50, height=1)
-    text_password.pack()
+    entry_password = ttk.Entry(master=frame_password, show="*")
+    entry_password.pack()
 
+    check_hide_password = ttk.Checkbutton(master=frame_password, text='Zeige Passwort', command=show)
+    check_hide_password.pack()
+
+    # password feedback
+    frame_password_feedback = tk.Frame()
+    label_password_tipps = tk.Label(master=frame_password_feedback)
+    label_password_tipps.pack()
+
+    label_password_status = tk.Label(master=frame_password_feedback)
+    label_password_status.pack()
+
+    # Button to start verification
     frame_button_check = tk.Frame()
-    button_check = tk.Button(master=frame_button_check, text='Überprüfen', width=20, height=1,
-                             bg='grey', fg='white', command=check_password)
+    button_check = ttk.Button(master=frame_button_check, text='Überprüfen', command=check_password)
     button_check.pack()
 
-    frame_password_feedback = tk.Frame()
-    label_password_feedback = tk.Label(master=frame_password_feedback)
-    label_password_feedback.pack()
-
+    # Description for the Generate button
     frame_label_gen = tk.Frame()
-    label_password_gen = tk.Label(master=frame_label_gen, text='\n\nWollen sie ein Passwort Generieren lassen?')
-    label_password_gen.pack()
+    label_password_gen = tk.Label(master=frame_label_gen, text='Generieren sie ein Passwort mit ')
+    label_password_gen.grid(column=0, row=0)
+    # Drop-Down Menu
+    user_len_password = tk.StringVar()
+    drop_len = ttk.OptionMenu(frame_label_gen, user_len_password, *STATICS.options_drop_len)
+    drop_len.grid(column=1, row=0)
+    # end of sentence
+    label_password_gen = tk.Label(master=frame_label_gen, text='stellen.')
+    label_password_gen.grid(column=2, row=0)
 
+    # Button Generated
     frame_button_gen = tk.Frame()
-    button_gen = tk.Button(master=frame_button_gen, text='Generieren', width=20, height=1,
-                           bg='green', fg='white', command=generate_password)
+    button_gen = ttk.Button(master=frame_button_gen, text='Generieren', command=generate_password)
     button_gen.pack()
 
+    # Generated password
     frame_label_gen_password = tk.Frame()
     label_gen_password = tk.Label(master=frame_label_gen_password)
     label_gen_password.pack()
 
-    frame_top.pack(padx=80, pady=10)
+    # Copyright line at the bottom
+    frame_copyright = tk.Frame()
+    copyright_line = tk.Label(master=frame_copyright, text="© 2022 Tiffinante" + " - " + STATICS.version)
+    copyright_line.pack(fill="x")
 
-    frame_label_check.pack(padx=80, pady=0)
-    frame_password.pack(padx=80, pady=0)
-    frame_button_check.pack(padx=80, pady=30)
-    frame_password_feedback.pack(padx=80, pady=0)
+    # place widgets in window
+    # Check password
+    frame_label_check.pack(padx=0, pady=0)
+    frame_password.pack(padx=0, pady=0)
+    entry_password.configure(width=30)
+    frame_button_check.pack(padx=0, pady=10)
+    frame_password_feedback.pack(padx=0, pady=0)
 
-    frame_label_gen.pack(padx=80, pady=0)
-    frame_button_gen.pack(padx=80, pady=20)
-    frame_label_gen_password.pack(padx=80, pady=10)
+    # Generate password
+    frame_label_gen.pack(padx=0, pady=0)
+    frame_button_gen.pack(padx=0, pady=10)
+    frame_label_gen_password.pack(padx=0, pady=25)
+
+    frame_copyright.pack(side="bottom", fill="x")
 
     window.mainloop()

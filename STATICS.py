@@ -1,3 +1,8 @@
+# Version
+version = "Version 1.0"
+
+# Title
+window_title = "Tiffinante's Password-Überprüfer"
 # List of the most frequently used passwords
 passwords = {"123456", "123456789", "12345678", "passw0rd", "passw0rt", "password", "passwort", "1234567",
              "123123", "1234567890", "111111", "abc123", "00000", "123", "abc", "000000123456", "123456789",
@@ -16,3 +21,8 @@ passwords = {"123456", "123456789", "12345678", "passw0rd", "passw0rt", "passwor
 
 # String with every character that can appear in a password
 characters = "abcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ!§$%&/\\()|=?'<>,.;:-_#+*@€{[]}"
+
+# Selection for the drop down menu
+options_drop_len = ["35"]
+for i in range(50, 10, -5):
+    options_drop_len.append(str(i))
