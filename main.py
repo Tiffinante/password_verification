@@ -141,7 +141,6 @@ if __name__ == '__main__':
     window = tk.Tk()
 
     # window settings
-    window.iconbitmap("images/password-24px.ico")
     window.title(STATICS.window_title)
     window.geometry('400x550')
     window.minsize(width=400, height=550)
