@@ -73,21 +73,21 @@ def check_password():
         text += "Verwenden sie (mehr) Sonderzeichen\n"
     if password.istitle():
         fail_count += 1
-        print("Verwenden sie Keine Wortähnlichen buchstaben ketten")
-        text += "Verwenden sie Keine Wortähnlichen buchstaben ketten\n"
+        print("Verwenden sie Keine Wort ähnlichen buchstaben ketten")
+        text += "Verwenden sie Keine Wort ähnlichen buchstaben ketten\n"
     if password.isalnum():
         fail_count += 1
-        print("Verwenden sie keine reinfolge wie 'abc' oder '123'")
-        text += "Verwenden sie keine reinfolge wie 'abc' oder '123'\n"
+        print("Verwenden sie keine rein folge wie 'abc' oder '123'")
+        text += "Verwenden sie keine rein folge wie 'abc' oder '123'\n"
 
     if password_len < 10:
         fail_count += 1
-        print("Verwenden sie ein längeresw Passwort")
-        text += "Verwenden sie ein längeresw Passwort\n"
+        print("Verwenden sie ein längeres Passwort")
+        text += "Verwenden sie ein längeres Passwort\n"
 
     if fail_count == 0:
-        print("Ihr Password erfüllt die Kirterien")
-        text += "Ihr Password erfüllt die Kirterien\n"
+        print("Ihr Password erfüllt die Kriterien")
+        text += "Ihr Password erfüllt die Kriterien\n"
 
     label_password_tipps.config(text=text)
     text, fg = "", ""
@@ -124,7 +124,7 @@ def generate_password():
     for i in range(int(user_len_password.get())):
         gen_password += STATICS.characters[random.randrange(len(STATICS.characters))]
     label_gen_password.config(text=gen_password, fg="green")
-    print("\nUser genneriert:\n" + str(gen_password))
+    print("\nUser generiert:\n" + str(gen_password))
 
 
 def show():
