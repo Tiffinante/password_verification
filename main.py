@@ -157,6 +157,7 @@ if __name__ == '__main__':
     entry_password = ttk.Entry(master=frame_password, show="*")
     entry_password.pack()
 
+    # hide or show password
     check_hide_password = ttk.Checkbutton(master=frame_password, text='Zeige Passwort', command=show)
     check_hide_password.pack()
 
@@ -164,7 +165,7 @@ if __name__ == '__main__':
     frame_password_feedback = tk.Frame()
     label_password_tipps = tk.Label(master=frame_password_feedback)
     label_password_tipps.pack()
-
+    # password feedback status
     label_password_status = tk.Label(master=frame_password_feedback)
     label_password_status.pack()
 
@@ -213,6 +214,7 @@ if __name__ == '__main__':
     frame_button_gen.pack(padx=0, pady=10)
     frame_label_gen_password.pack(padx=0, pady=25)
 
+    # bottom Text
     frame_copyright.pack(side="bottom", fill="x")
 
     window.mainloop()
